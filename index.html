@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Создай свой первый мультфильм с помощью нейросетей за 1 день. Бесплатный курс для начинающих.">
+  <title>Создай свой первый мультфильм с нейросетями 🎬</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #FFE5B4 0%, #FFD700 50%, #FFA07A 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      top: -200px;
+      right: -200px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(135, 206, 250, 0.15);
+      border-radius: 50%;
+      bottom: -100px;
+      left: -100px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-30px);
+      }
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      animation: slideDown 0.8s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: #34495e;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      animation: slideUp 0.8s ease-out 0.2s both;
+      padding: 0 10px;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+      color: white;
+      padding: 18px 45px;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+      animation: slideUp 0.8s ease-out 0.4s both;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+    }
+
+    .cta-button:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .character-preview {
+      margin-top: 50px;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      animation: slideUp 0.8s ease-out 0.6s both;
+    }
+
+    .character-preview p {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: #2c3e50;
+      margin: 0;
+    }
+
+    /* Video Section */
+    .video-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      text-align: center;
+    }
+
+    .video-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .video-section h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .video-description {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: #34495e;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      background: #000;
+      margin-bottom: 30px;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    .video-tip {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: #666;
+      font-style: italic;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 15px;
+      border-left: 5px solid #4ECDC4;
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    /* Result Section */
+    .result-section {
+      padding: 80px 20px;
+      background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+      text-align: center;
+    }
+
+    .result-section h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #2c3e50;
+      margin-bottom: 30px;
+      font-weight: 800;
+    }
+
+    .result-description {
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: #34495e;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      line-height: 1.8;
+      padding: 0 15px;
+    }
+
+    .results-list {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      text-align: left;
+      padding: 0 15px;
+    }
+
+    .result-item {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    }
+
+    .result-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .result-item::before {
+      content: '✓';
+      font-size: 1.8rem;
+      color: #4CAF50;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    /* Steps Section */
+    .steps-section {
+      padding: 80px 20px;
+      background: linear-gradient(to bottom, #FFF9E6, #FFE5CC);
+    }
+
+    .steps-section h2 {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #2c3e50;
+      margin-bottom: 60px;
+      font-weight: 800;
+    }
+
+    .steps-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 40px;
+      padding: 0 15px;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 25px;
+      padding: 35px 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1);
+    }
+
+    .step-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .step-number {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      line-height: 55px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
+
+    .step-card p {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.7;
+    }
+
+    .tool-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      color: white;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-weight: 600;
+      margin: 10px 5px 10px 0;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .tool-badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+    }
+
+    .prompt-box {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+      border-left: 5px solid #4ECDC4;
+      font-family: 'Courier New', monospace;
+      font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+      color: #2c3e50;
+      line-height: 1.6;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .prompt-label {
+      display: inline-block;
+      background: #FFD700;
+      color: #2c3e50;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: clamp(0.8rem, 1.3vw, 0.9rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .inspiration-text {
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: #666;
+      font-style: italic;
+      margin-top: 15px;
+      padding: 15px;
+      background: #fff3cd;
+      border-radius: 10px;
+      border-left: 3px solid #ffc107;
+      line-height: 1.6;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      text-align: center;
+    }
+
+    .gallery-section h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: white;
+      margin-bottom: 50px;
+      font-weight: 800;
+    }
+
+    .gallery-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 15px;
+    }
+
+    .gallery-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Motivation Section */
+    .motivation-section {
+      padding: 80px 20px;
+      background: linear-gradient(to bottom, #FFE5B4, #FFD700);
+      text-align: center;
+    }
+
+    .motivation-quote {
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      color: #2c3e50;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.4;
+      padding: 0 15px;
+    }
+
+    /* Footer */
+    footer {
+      background: #2c3e50;
+      color: white;
+      padding: 50px 20px 30px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .footer-links a {
+      color: #87CEEB;
+      text-decoration: none;
+      font-size: clamp(1rem, 1.8vw, 1.1rem);
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #FFD700;
+    }
+
+    .footer-love {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      margin-top: 30px;
+      color: #FFE5B4;
+    }
+
+    /* Mobile Optimization */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 40px 15px 30px;
+        min-height: auto;
+      }
+
+      .result-section,
+      .steps-section,
+      .gallery-section,
+      .motivation-section,
+      .video-section {
+        padding: 60px 15px;
+      }
+
+      .step-card {
+        padding: 30px 20px;
+      }
+
+      .results-list,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .prompt-box {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 30px 10px 20px;
+      }
+
+      .cta-button {
+        padding: 15px 35px;
+        width: 90%;
+        max-width: 300px;
+      }
+
+      .result-section,
+      .steps-section,
+      .gallery-section,
+      .motivation-section,
+      .video-section {
+        padding: 50px 10px;
+      }
+
+      .step-card {
+        padding: 25px 15px;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Создай свой первый мультфильм<br>с помощью нейросетей 🎬</h1>
+      <p>Пройди 6 шагов и уже сегодня сделай свой первый 30-секундный мультфильм!<br>
+        <strong>Без опыта. Без программирования. Только творчество.</strong>
+      </p>
+      <button onclick="document.getElementById('steps').scrollIntoView({behavior: 'smooth'})" class="cta-button">Начать курс бесплатно</button>
+      <div class="character-preview">
+        <p>🎨 Твой первый анимированный герой уже ждёт!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Tutorial Section -->
+  <section class="video-section">
+    <div class="video-container">
+      <h2>🎥 Видеоинструкция: Как создать мультфильм</h2>
+      <p class="video-description">Смотри подробное пошаговое руководство и создавай вместе со мной!</p>
+      <div class="video-wrapper">
+        <iframe 
+          src="" 
+          title="Как создать мультфильм с помощью нейросетей"
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="video-tip">💡 Совет: Открой видео в отдельной вкладке и следуй инструкциям шаг за шагом</p>
+    </div>
+  </section>
+
+  <!-- What You'll Create -->
+  <section class="result-section">
+    <h2>Что ты создашь 🎯</h2>
+    <div class="result-description">
+      <strong>За 1 день ты создашь короткий мультфильм</strong> (6 сцен по 5 секунд)<br>
+      — от идеи до монтажа.<br>
+      Мы пройдём весь путь вместе 💪
+    </div>
+    <div class="results-list">
+      <div class="result-item">Придумаешь героя и сюжет с помощью ChatGPT</div>
+      <div class="result-item">Создашь сцены через RunwayML</div>
+      <div class="result-item">Проверишь последовательность в Miro</div>
+      <div class="result-item">Анимируешь их в Kling AI</div>
+      <div class="result-item">Озвучишь через ElevenLabs</div>
+      <div class="result-item">Смонтируешь всё в CapCut</div>
+    </div>
+  </section>
+
+  <!-- Steps Section -->
+  <section class="steps-section" id="steps">
+    <h2>Пошаговое обучение 📚</h2>
+    <div class="steps-container">
+
+      <!-- Step 1 -->
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>🎭 Придумай идею и героя</h3>
+        <p><strong>Создай сюжет и раскадровку</strong></p>
+        <a href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" class="tool-badge">🧠 ChatGPT</a>
+        <div class="prompt-box">
+          <span class="prompt-label">💡 Пример промта:</span><br><br>
+          "Нужно написать сценарий для мультипликации в нем мой персонаж будет рассказывать о создание мультипликации
+          можешь помочь с сценарием написанием промта для него создания раскадровки по 5 секунд одна сцена, вообщем мультфильм будет на 30 секунд и написать
+          промт для создания моего персонажа и чтобы с ним совпадали сцены чтобы персонаж в каждой сцене выглядел
+          одинаково и без перебоев. Также напиши в каждой сцене закадровый голос и сделай промт на русском и английском. Создавать фото для сцен буду использовать ИИ runway. Можешь задать мне вопросы для лучшего результата."
+        </div>
+        <div class="inspiration-text">
+          💭 Это пример! Используй его как вдохновение и создай своего уникального героя и сюжет
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>🖼️ Нарисуй сцены</h3>
+        <p><strong>Создай 6 изображений по описанию из ChatGPT</strong></p>
+        <a href="https://runwayml.com" target="_blank" rel="noopener noreferrer" class="tool-badge">🎨 RunwayML</a>
+        <div class="prompt-box">
+          <span class="prompt-label">💡 Пример промта:</span><br><br>
+          "Pixar 3D cinematic scene featuring Ivan (A 3D Pixar-style male character named Ivan, 20 years old, slim
+          build, light brown short hair, fair skin, wearing a mint green t-shirt with black trim and stripe on the
+          sleeves, black pants. He looks friendly, expressive, and curious. Maintain the same character design,
+          proportions, clothing, and lighting across all scenes. Cinematic Pixar lighting, soft warm tones, detailed
+          environment.) standing in a cozy animation studio with warm lighting. A big screen with a logo is behind him.
+          The camera slowly zooms in as Ivan smiles and waves slightly, greeting the audience. Expression: cheerful and
+          welcoming. Subtle camera movement, cinematic depth of field."
+        </div>
+        <div class="inspiration-text">
+          💭 Адаптируй этот промт под своего персонажа! Измени имя, внешность, одежду и окружение
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>📋 Проверь последовательность сцен</h3>
+        <p><strong>Убедись, что сцены расположены правильно</strong></p>
+        <a href="https://miro.com" target="_blank" rel="noopener noreferrer" class="tool-badge">🎯 Miro</a>
+        <p style="margin-top: 20px;">
+          • Создай доску в Miro<br>
+          • Загрузи все 6 сцен из RunwayML<br>
+          • Расположи их по порядку (сцена 1 → 6)<br>
+          • Сделай скриншот всей доски со сценами<br>
+          • Отправь скриншот в ChatGPT для проверки
+        </p>
+        <div class="prompt-box">
+          <span class="prompt-label">💡 Промт для ChatGPT:</span><br><br>
+          "Вот мои 6 сцен для мультфильма (прикрепи скриншот из Miro). Проверь, пожалуйста:<br>
+          1. Правильно ли расположены сцены по порядку?<br>
+          2. Соответствует ли визуал сюжету?<br>
+          3. Одинаково ли выглядит персонаж во всех сценах?<br>
+          4. Напиши точные промты для анимации каждой сцены в Kling AI с описанием движений персонажа."
+        </div>
+        <div class="inspiration-text">
+          💭 ChatGPT поможет убедиться, что твой сюжет логичен и даст готовые промты для следующего шага!
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>🎞️ Сделай анимацию</h3>
+        <p><strong>Преврати сцены в движение</strong></p>
+        <a href="https://klingai.com" target="_blank" rel="noopener noreferrer" class="tool-badge">💡 Kling AI</a>
+        <p style="margin-top: 20px;">Добавь действия персонажа в описании и наблюдай, как твои статичные картинки
+          оживают! Kling AI создаст плавную анимацию длительностью 5 секунд для каждой сцены.</p>
+        <div class="inspiration-text">
+          💭 Используй промты, которые ChatGPT написал после проверки твоих сцен в Miro
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step-card">
+        <div class="step-number">5</div>
+        <h3>🎙️ Озвучь мультфильм</h3>
+        <p><strong>Выбери голос и озвучь реплики героя</strong></p>
+        <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" class="tool-badge">🗣️ ElevenLabs</a>
+        <p style="margin-top: 20px;">Добавь эмоции и интонацию! Твой герой заговорит живым голосом с правильными паузами
+          и выразительностью. ElevenLabs сделает озвучку профессиональной.</p>
+        <div class="inspiration-text">
+          💭 Выбери голос, который подходит твоему персонажу — молодой, энергичный или мудрый и спокойный
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="step-card">
+        <div class="step-number">6</div>
+        <h3>🎬 Собери всё в CapCut</h3>
+        <p><strong>Финальный монтаж твоего мультфильма!</strong></p>
+        <a href="https://www.capcut.com" target="_blank" rel="noopener noreferrer" class="tool-badge">✂️ CapCut</a>
+        <p style="margin-top: 20px;">
+          • Импортируй все сцены и звуки<br>
+          • Добавь фоновую музыку<br>
+          • Создай титры и переходы<br>
+          • Экспортируй готовый мультфильм в высоком качестве 🚀
+        </p>
+        <div class="inspiration-text">
+          💭 Подбери музыку, которая соответствует настроению твоего мультфильма. CapCut имеет встроенную библиотеку
+          треков!
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <h2>Примеры работ учеников ✨</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <p>🦊 Лесная сказка<br>Даниил, 18 лет</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Motivation Section -->
+  <section class="motivation-section">
+    <div class="motivation-quote">
+      "Ты не просто учишься — ты создаёшь свой первый мир." 🌍
+    </div>
+    <button onclick="document.getElementById('steps').scrollIntoView({behavior: 'smooth'})" class="cta-button">Создать
+      мультфильм сейчас</button>
+  </section>
+
+ <!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="#tools">Инструменты</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Контакты</a>
+    <a href="#telegram">Telegram-группа</a>
+  </div>
+  <div class="footer-love">
+    Курс создан с любовью к мультфильмам ❤️
+  </div>
+</footer>
+
+</body>
+
+</html>
